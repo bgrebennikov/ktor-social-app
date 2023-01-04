@@ -13,13 +13,17 @@ fun Application.configureRouting() {
     install(Resources)
 
     routing {
-        get("/") {
-            call.respondText("Hello World!")
-        }
-        get<Articles> { article ->
-            // Get all articles ...
-            call.respond("List of articles sorted starting from ${article.sort}")
-        }
+
+        baseRouter()
+
+
+//        get("/") {
+//            call.respondText("Hello World!")
+//        }
+//        get<Articles> { article ->
+//            // Get all articles ...
+//            call.respond("List of articles sorted starting from ${article.sort}")
+//        }
     }
 }
 
