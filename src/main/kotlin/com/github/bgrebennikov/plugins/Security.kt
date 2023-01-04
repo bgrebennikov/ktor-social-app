@@ -6,10 +6,8 @@ import io.ktor.server.auth.jwt.*
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
-import com.github.bgrebennikov.common.JWT_AUDIENCE
-import com.github.bgrebennikov.common.JWT_DOMAIN
-import com.github.bgrebennikov.common.JWT_REALM
-import com.github.bgrebennikov.common.JWT_SECRET
+import com.github.bgrebennikov.common.*
+import com.github.bgrebennikov.data.requests.auth.UserJwtPrincipal
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.request.*
@@ -28,7 +26,14 @@ fun Application.configureSecurity() {
                     .build()
             )
             validate { credential ->
-                if (credential.payload.audience.contains(jwtAudience)) JWTPrincipal(credential.payload) else null
+                if (credential.payload.audience.contains(jwtAudience)) {
+                    with(credential.payload){
+                        UserJwtPrincipal(
+                            userId = getClaim(FIELD_USER_ID).asString(),
+                            email = getClaim(FIELD_EMAIL).asString()
+                        )
+                    }
+                } else null
             }
         }
     }
