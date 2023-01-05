@@ -8,4 +8,4 @@ val userDataSourceModule = module {
     single<UserDataSource> {
         UserDataSourceImpl()
     }
-} 
+}
