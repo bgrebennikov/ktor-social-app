@@ -1,8 +1,14 @@
 package com.github.bgrebennikov.datasource
 
 import com.github.bgrebennikov.data.entity.user.UserEntity
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.litote.kmongo.coroutine.CoroutineDatabase
 
-class UserDataSourceImpl : UserDataSource {
+class UserDataSourceImpl : UserDataSource, KoinComponent {
+
+    private val database by inject<CoroutineDatabase>()
+
     override suspend fun insertUser(user: UserEntity): UserEntity {
         TODO()
     }
