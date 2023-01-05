@@ -14,7 +14,7 @@ data class UserEntity(
 
     data class UserProfile(
         @BsonId
-        val id: String? = ObjectId().toString(),
+        val id: String,
         val firstName: String?
     )
 }
