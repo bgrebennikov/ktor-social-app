@@ -12,6 +12,7 @@ class UserDataSourceImpl : UserDataSource, KoinComponent {
     private val users = database.getCollection<UserEntity>()
 
     override suspend fun insertUser(user: UserEntity): UserEntity {
-        TODO()
+        users.insertOne(user)
+        return user
     }
 }
