@@ -15,6 +15,7 @@ data class UserEntity(
 
 
     data class Test(
-        override val id: String
+        override val id: String,
+        val firstName: String?
     ) : UserId()
 }
