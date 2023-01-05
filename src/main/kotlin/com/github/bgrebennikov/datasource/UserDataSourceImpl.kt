@@ -9,6 +9,8 @@ class UserDataSourceImpl : UserDataSource, KoinComponent {
 
     private val database by inject<CoroutineDatabase>()
 
+    private val users = database.getCollection<UserEntity>()
+
     override suspend fun insertUser(user: UserEntity): UserEntity {
         TODO()
     }
