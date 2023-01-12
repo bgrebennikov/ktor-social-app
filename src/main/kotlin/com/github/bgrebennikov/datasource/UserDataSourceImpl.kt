@@ -13,7 +13,7 @@ class UserDataSourceImpl : UserDataSource, KoinComponent {
     private val users = database.getCollection<UserEntity>()
     override suspend fun findUserByEmail(email: String): UserEntity? {
         return users.findOne(
-            Filters.eq("email", email)
+            Filters.eq("profile.email", email)
         )
     }
 
