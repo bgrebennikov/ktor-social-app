@@ -5,6 +5,7 @@ import com.github.bgrebennikov.DI.modules.databaseModule
 import com.github.bgrebennikov.DI.modules.userDataSourceModule
 import io.ktor.server.application.*
 import org.koin.core.context.startKoin
+import org.koin.dsl.module
 
 
 fun Application.configureDI(){
@@ -12,7 +13,13 @@ fun Application.configureDI(){
         modules(
             databaseModule,
             userDataSourceModule,
-            authServiceModule
+            authServiceModule,
+
+            module {
+                single {
+                    this@configureDI
+                }
+            }
         )
     }
 }
