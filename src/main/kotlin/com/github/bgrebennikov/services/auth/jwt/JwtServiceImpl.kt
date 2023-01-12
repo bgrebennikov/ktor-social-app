@@ -34,6 +34,6 @@ class JwtServiceImpl : JwtService, KoinComponent {
     }
 
     override suspend fun generateToken(request: SignupRequestDto, userId: String): String {
-        TODO()
+        return buildJwtToken(UserJwtPrincipal(userId, request.email))
     }
 }
