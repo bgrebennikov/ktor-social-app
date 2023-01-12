@@ -1,4 +1,4 @@
-package com.github.bgrebennikov.services.security
+package com.github.bgrebennikov.services.auth
 
 import com.github.bgrebennikov.data.base.BaseResponse
 import com.github.bgrebennikov.data.base.ErrorType
