@@ -48,4 +48,5 @@ dependencies {
     implementation("org.litote.kmongo:kmongo:$kmongo_version")
     implementation("org.litote.kmongo:kmongo-coroutine:$kmongo_version")
 
+    implementation("commons-codec:commons-codec:1.5")
 }
