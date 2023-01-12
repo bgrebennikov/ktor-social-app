@@ -34,14 +34,18 @@ class AuthServiceImpl : AuthService, KoinComponent {
 
         val generatedId = ObjectId().toString()
 
-        return userDataSource.insertUser(
-            UserEntity(
-                id = generatedId,
-                token = "fsefsefsef",
-                passwordHash = signupRequest.password,
-                profile = UserEntity.UserProfile(
+
+        return BaseResponse(
+            response = userDataSource.insertUser(
+                UserEntity(
                     id = generatedId,
-                    firstName = signupRequest.firstName
+                    token = "temp",
+                    passwordHash = signupRequest.password,
+                    profile = UserEntity.UserProfile(
+                        id = generatedId,
+                        firstName = signupRequest.firstName,
+                        email = signupRequest.email
+                    )
                 )
             )
         )
