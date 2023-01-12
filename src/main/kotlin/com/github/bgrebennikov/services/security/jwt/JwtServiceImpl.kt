@@ -1,4 +1,4 @@
-package com.github.bgrebennikov.services.auth.jwt
+package com.github.bgrebennikov.services.security.jwt
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm

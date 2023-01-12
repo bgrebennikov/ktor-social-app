@@ -1,4 +1,4 @@
-package com.github.bgrebennikov.services.auth
+package com.github.bgrebennikov.services.security
 
 import com.github.bgrebennikov.data.base.BaseResponse
 import com.github.bgrebennikov.data.base.ErrorType
@@ -6,12 +6,11 @@ import com.github.bgrebennikov.data.base.ResponseError
 import com.github.bgrebennikov.data.entity.user.UserEntity
 import com.github.bgrebennikov.data.requests.auth.SignupRequestDto
 import com.github.bgrebennikov.datasource.UserDataSource
-import com.github.bgrebennikov.services.auth.jwt.JwtService
+import com.github.bgrebennikov.services.security.jwt.JwtService
 import io.ktor.http.*
 import org.bson.types.ObjectId
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import kotlin.math.sign
 
 class AuthServiceImpl : AuthService, KoinComponent {
 

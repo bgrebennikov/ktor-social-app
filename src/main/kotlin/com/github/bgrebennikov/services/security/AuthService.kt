@@ -1,4 +1,4 @@
-package com.github.bgrebennikov.services.auth
+package com.github.bgrebennikov.services.security
 
 import com.github.bgrebennikov.data.base.BaseResponse
 import com.github.bgrebennikov.data.entity.user.UserEntity

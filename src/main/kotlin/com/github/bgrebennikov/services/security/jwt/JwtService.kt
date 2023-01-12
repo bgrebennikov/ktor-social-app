@@ -1,4 +1,4 @@
-package com.github.bgrebennikov.services.auth.jwt
+package com.github.bgrebennikov.services.security.jwt
 
 import com.github.bgrebennikov.data.requests.auth.SignupRequestDto
 

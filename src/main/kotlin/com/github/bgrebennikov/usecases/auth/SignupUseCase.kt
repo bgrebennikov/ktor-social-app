@@ -3,7 +3,7 @@ package com.github.bgrebennikov.usecases.auth
 import com.github.bgrebennikov.data.base.BaseResponse
 import com.github.bgrebennikov.data.entity.user.UserEntity
 import com.github.bgrebennikov.data.requests.auth.SignupRequestDto
-import com.github.bgrebennikov.services.auth.AuthService
+import com.github.bgrebennikov.services.security.AuthService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
