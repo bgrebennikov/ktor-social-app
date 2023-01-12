@@ -1,8 +1,12 @@
 package com.github.bgrebennikov.services.auth
 
+import com.github.bgrebennikov.data.base.BaseResponse
+import com.github.bgrebennikov.data.base.ErrorType
+import com.github.bgrebennikov.data.base.ResponseError
 import com.github.bgrebennikov.data.entity.user.UserEntity
 import com.github.bgrebennikov.data.requests.auth.SignupRequestDto
 import com.github.bgrebennikov.datasource.UserDataSource
+import io.ktor.http.*
 import org.bson.types.ObjectId
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -11,7 +15,22 @@ class AuthServiceImpl : AuthService, KoinComponent {
 
     private val userDataSource by inject<UserDataSource>()
 
-    override suspend fun signUp(signupRequest: SignupRequestDto): UserEntity {
+    private suspend fun userExists(email: String): Boolean {
+        return userDataSource.findUserByEmail(email) != null
+    }
+
+    override suspend fun signUp(signupRequest: SignupRequestDto): BaseResponse<UserEntity> {
+
+        if (!userExists(signupRequest.email)) return BaseResponse(
+            status = HttpStatusCode.BadRequest,
+            errors = listOf(
+                ResponseError(
+                    message = "User already exists",
+                    field = "email",
+                    type = ErrorType.EMAIL_ALREADY_EXISTS
+                )
+            )
+        )
 
         val generatedId = ObjectId().toString()
 
