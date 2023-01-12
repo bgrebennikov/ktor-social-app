@@ -15,6 +15,7 @@ data class UserEntity(
     data class UserProfile(
         @BsonId
         val id: String,
+        val email: String,
         val firstName: String?
     )
 }
