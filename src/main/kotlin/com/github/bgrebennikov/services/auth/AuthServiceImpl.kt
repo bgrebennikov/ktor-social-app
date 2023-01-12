@@ -6,6 +6,7 @@ import com.github.bgrebennikov.data.base.ResponseError
 import com.github.bgrebennikov.data.entity.user.UserEntity
 import com.github.bgrebennikov.data.requests.auth.SignupRequestDto
 import com.github.bgrebennikov.datasource.UserDataSource
+import com.github.bgrebennikov.services.security.hashing.HashingService
 import com.github.bgrebennikov.services.security.jwt.JwtService
 import io.ktor.http.*
 import org.bson.types.ObjectId
@@ -15,6 +16,7 @@ import org.koin.core.component.inject
 class AuthServiceImpl : AuthService, KoinComponent {
 
     private val userDataSource by inject<UserDataSource>()
+    private val hashingService by inject<HashingService>()
     private val jwtService by inject<JwtService>()
 
     private suspend fun userExists(email: String): Boolean {
@@ -42,7 +44,9 @@ class AuthServiceImpl : AuthService, KoinComponent {
                 UserEntity(
                     id = generatedId,
                     token = jwtService.generateToken(signupRequest, generatedId),
-                    passwordHash = signupRequest.password,
+                    passwordHash = hashingService.generateSaltedHash(
+                        signupRequest.password
+                    ),
                     profile = UserEntity.UserProfile(
                         id = generatedId,
                         firstName = signupRequest.firstName,
