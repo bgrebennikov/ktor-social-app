@@ -24,7 +24,7 @@ class AuthServiceImpl : AuthService, KoinComponent {
 
     override suspend fun signUp(signupRequest: SignupRequestDto): BaseResponse<UserEntity> {
 
-        if (!userExists(signupRequest.email)) return BaseResponse(
+        if (userExists(signupRequest.email)) return BaseResponse(
             status = HttpStatusCode.BadRequest,
             errors = listOf(
                 ResponseError(
