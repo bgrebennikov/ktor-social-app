@@ -18,6 +18,16 @@ object Errors {
                 )
             )
         )
+
+        val USER_NOT_FOUND = BaseResponse<UserEntity>(
+            status = HttpStatusCode.BadRequest,
+            errors = listOf(
+                ResponseError(
+                    message = "USER_NOT_FOUND",
+                    type = ErrorType.USER_NOT_FOUND
+                )
+            )
+        )
     }
 
     object Auth {
