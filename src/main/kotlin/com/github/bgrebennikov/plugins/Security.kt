@@ -39,3 +39,6 @@ fun Application.configureSecurity() {
     }
 
 }
+
+
+val ApplicationCall.jwtUser get() = principal<UserJwtPrincipal>()
