@@ -28,7 +28,7 @@ class JwtServiceImpl : JwtService, KoinComponent {
             .withExpiresAt(expiresAt)
             .withClaim(CLAIM_USER_ID, claim.userId)
             .withClaim(CLAIM_EMAIL, claim.email)
-            .sign(Algorithm.HMAC256(JWT_SECRET))
+            .sign(JWT_ALGORITHM)
     }
 
     override suspend fun generateToken(request: SignupRequestDto, userId: String): String {
