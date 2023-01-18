@@ -38,19 +38,20 @@ class AuthServiceImpl : AuthService, KoinComponent {
 
         val generatedId = ObjectId().toString()
 
-
         return BaseResponse(
             response = userDataSource.insertUser(
                 UserEntity(
                     id = generatedId,
-                    token = jwtService.generateToken(signupRequest, generatedId),
-                    passwordHash = hashingService.generateSaltedHash(
-                        signupRequest.password
-                    ),
                     profile = UserEntity.UserProfile(
                         id = generatedId,
                         firstName = signupRequest.firstName,
                         email = signupRequest.email
+                    ),
+                    settings = UserEntity.UserSettings(
+                        token = jwtService.generateToken(signupRequest, generatedId),
+                        passwordHash = hashingService.generateSaltedHash(
+                            signupRequest.password
+                        )
                     )
                 )
             )
