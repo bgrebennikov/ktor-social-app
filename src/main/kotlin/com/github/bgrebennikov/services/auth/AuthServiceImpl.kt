@@ -25,16 +25,7 @@ class AuthServiceImpl : AuthService, KoinComponent {
 
     override suspend fun signUp(signupRequest: SignupRequestDto): BaseResponse<UserEntity> {
 
-        if (userExists(signupRequest.email)) return BaseResponse(
-            status = HttpStatusCode.BadRequest,
-            errors = listOf(
-                ResponseError(
-                    message = "User already exists",
-                    field = "email",
-                    type = ErrorType.EMAIL_ALREADY_EXISTS
-                )
-            )
-        )
+        if (userExists(signupRequest.email)) return Errors.User.USER_ALREADY_EXISTS
 
         val generatedId = ObjectId().toString()
 
