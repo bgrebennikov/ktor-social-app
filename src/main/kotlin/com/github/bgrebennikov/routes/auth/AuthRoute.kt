@@ -1,6 +1,8 @@
 package com.github.bgrebennikov.routes.auth
 
+import com.github.bgrebennikov.data.requests.auth.LoginRequestDto
 import com.github.bgrebennikov.data.requests.auth.SignupRequestDto
+import com.github.bgrebennikov.usecases.auth.LoginUseCase
 import com.github.bgrebennikov.usecases.auth.SignupUseCase
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -17,7 +19,8 @@ fun Route.authRoutes() {
 
 private fun Route.loginRoute() {
     post("/login") {
-        call.respond("Login Route")
+        val request = call.receiveNullable<LoginRequestDto>() ?: return@post
+        call.respond(LoginUseCase().invoke(request))
     }
 }
 
