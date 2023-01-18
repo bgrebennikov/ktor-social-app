@@ -17,6 +17,10 @@ class UserDataSourceImpl : UserDataSource, KoinComponent {
         )
     }
 
+    override suspend fun findUserById(userId: String): UserEntity? {
+        return users.findOneById(userId)
+    }
+
     override suspend fun insertUser(user: UserEntity): UserEntity {
         users.insertOne(user)
         return user
