@@ -20,7 +20,7 @@ fun Application.configureSecurity() {
             realm = this@configureSecurity.environment.config.property(JWT_REALM).getString()
             verifier(
                 JWT
-                    .require(Algorithm.HMAC256(JWT_SECRET))
+                    .require(JWT_ALGORITHM)
                     .withAudience(jwtAudience)
                     .withIssuer(this@configureSecurity.environment.config.property(JWT_DOMAIN).getString())
                     .build()
