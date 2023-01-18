@@ -6,6 +6,7 @@ import com.github.bgrebennikov.common.CLAIM_EMAIL
 import com.github.bgrebennikov.common.CLAIM_USER_ID
 import com.github.bgrebennikov.common.JWT_AUDIENCE
 import com.github.bgrebennikov.common.JWT_DOMAIN
+import com.github.bgrebennikov.data.requests.auth.LoginRequestDto
 import com.github.bgrebennikov.data.requests.auth.SignupRequestDto
 import com.github.bgrebennikov.data.requests.auth.UserJwtPrincipal
 import io.ktor.server.application.*
@@ -35,5 +36,9 @@ class JwtServiceImpl : JwtService, KoinComponent {
 
     override suspend fun generateToken(request: SignupRequestDto, userId: String): String {
         return buildJwtToken(UserJwtPrincipal(userId, request.email))
+    }
+
+    override suspend fun generateToken(request: LoginRequestDto, userId: String): String {
+        return buildJwtToken(UserJwtPrincipal(userId, request.login))
     }
 }
