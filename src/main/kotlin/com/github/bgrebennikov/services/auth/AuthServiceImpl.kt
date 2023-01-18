@@ -1,14 +1,13 @@
 package com.github.bgrebennikov.services.auth
 
+import com.github.bgrebennikov.common.Errors
 import com.github.bgrebennikov.data.base.BaseResponse
-import com.github.bgrebennikov.data.base.ErrorType
-import com.github.bgrebennikov.data.base.ResponseError
 import com.github.bgrebennikov.data.entity.user.UserEntity
+import com.github.bgrebennikov.data.requests.auth.LoginRequestDto
 import com.github.bgrebennikov.data.requests.auth.SignupRequestDto
 import com.github.bgrebennikov.datasource.UserDataSource
 import com.github.bgrebennikov.services.security.hashing.HashingService
 import com.github.bgrebennikov.services.security.jwt.JwtService
-import io.ktor.http.*
 import org.bson.types.ObjectId
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -43,6 +42,30 @@ class AuthServiceImpl : AuthService, KoinComponent {
                         passwordHash = hashingService.generateSaltedHash(
                             signupRequest.password
                         )
+                    )
+                )
+            )
+        )
+
+    }
+
+    override suspend fun login(loginRequestDto: LoginRequestDto): BaseResponse<UserEntity> {
+
+        val userEntity = userDataSource.findUserByEmail(loginRequestDto.login)
+            ?: return Errors.Auth.LOGIN_WRONG_CREDENTIALS
+
+        val isValidCredentials = hashingService.verify(
+            loginRequestDto.password, userEntity.settings.passwordHash
+        )
+
+        if(!isValidCredentials) return Errors.Auth.LOGIN_WRONG_CREDENTIALS
+
+        return BaseResponse(
+            response = userEntity.copy(
+                settings = userEntity.settings.copy(
+                    token = jwtService.generateToken(
+                        loginRequestDto,
+                        userEntity.id
                     )
                 )
             )
