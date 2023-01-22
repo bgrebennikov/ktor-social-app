@@ -10,3 +10,5 @@ jwt:
   realm: "ktor sample app"
 hashing:
   salt: "ihc999w90900900af"
+server:
+  domain: "http://127.0.0.1"
