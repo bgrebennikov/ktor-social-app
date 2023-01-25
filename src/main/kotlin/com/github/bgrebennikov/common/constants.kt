@@ -19,3 +19,16 @@ const val CLAIM_EMAIL = "email"
 const val HASHING_SALT_PROPERTY = "hashing.salt"
 
 val JWT_ALGORITHM: Algorithm = Algorithm.HMAC256(JWT_SECRET)
+
+
+const val PHOTO_UPLOAD_MAX_SIZE = 1600
+
+val thumbnailSizes = mapOf<String, Int>(
+    "photo_50" to 50,
+    "photo_100" to 100,
+    "photo_150" to 150,
+    "photo_200" to 200,
+)
+
+const val UPLOADS_PATH_ROOT = "uploads"
+
