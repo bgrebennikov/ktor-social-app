@@ -3,6 +3,7 @@ val kotlin_version: String by project
 val logback_version: String by project
 val koin_version: String by project
 val kmongo_version: String by project
+val scalr_version: String by project
 
 plugins {
     kotlin("jvm") version "1.8.0"
@@ -48,5 +49,6 @@ dependencies {
     implementation("org.litote.kmongo:kmongo:$kmongo_version")
     implementation("org.litote.kmongo:kmongo-coroutine:$kmongo_version")
 
-    implementation("commons-codec:commons-codec:1.5")
+    implementation("commons-codec:commons-codec:1.13")
+    implementation("org.imgscalr:imgscalr-lib:$scalr_version")
 }
