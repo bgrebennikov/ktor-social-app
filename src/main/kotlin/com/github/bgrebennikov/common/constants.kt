@@ -2,6 +2,8 @@ package com.github.bgrebennikov.common
 
 import com.auth0.jwt.algorithms.Algorithm
 
+const val SERVER_DOMAIN = "server.domain"
+
 const val JWT_AUDIENCE = "jwt.audience"
 const val JWT_REALM = "jwt.realm"
 const val JWT_SECRET = "secret"
