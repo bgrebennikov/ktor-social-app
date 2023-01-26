@@ -54,6 +54,15 @@ object Errors {
                 )
             )
         )
+        val TOKEN_EXPIRED = BaseResponse(
+            response = null,
+            errors = listOf(
+                ResponseError(
+                    message = "Token is not valid or has been expired",
+                    type = ErrorType.TOKEN_EXPIRED
+                )
+            )
+        )
     }
 
     object Server{
