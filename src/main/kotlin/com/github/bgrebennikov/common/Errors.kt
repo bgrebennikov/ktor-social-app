@@ -46,7 +46,7 @@ object Errors {
 
     object Uploads {
         val WRONG_UPLOAD_PHOTO_ID = BaseResponse(
-            response = EditAvatarResponse(action = EditAvatarAction.UPDATE),
+            response = EditAvatarResponse(action = UserActions.UPDATE),
             errors = listOf(
                 ResponseError(
                     message = "File upload id must be not empty",
