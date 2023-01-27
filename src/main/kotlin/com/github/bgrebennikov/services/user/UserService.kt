@@ -2,7 +2,7 @@ package com.github.bgrebennikov.services.user
 
 import com.github.bgrebennikov.data.base.BaseResponse
 import com.github.bgrebennikov.data.entity.user.UserEntity
-import com.github.bgrebennikov.data.requests.user.edit.EditAvatarResponse
+import com.github.bgrebennikov.data.responses.user.edit.EditAvatarResponse
 
 interface UserService {
 
