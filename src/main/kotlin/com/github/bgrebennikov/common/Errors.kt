@@ -1,5 +1,6 @@
 package com.github.bgrebennikov.common
 
+import com.github.bgrebennikov.data.auth.AuthResponse
 import com.github.bgrebennikov.data.base.BaseResponse
 import com.github.bgrebennikov.data.base.ErrorType
 import com.github.bgrebennikov.data.base.ResponseError
