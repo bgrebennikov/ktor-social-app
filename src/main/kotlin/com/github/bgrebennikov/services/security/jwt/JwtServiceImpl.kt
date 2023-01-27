@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT
 import com.github.bgrebennikov.common.*
 import com.github.bgrebennikov.data.requests.auth.LoginRequest
 import com.github.bgrebennikov.data.requests.auth.SignupRequest
-import com.github.bgrebennikov.data.requests.auth.UserJwtPrincipal
+import com.github.bgrebennikov.data.jwt.UserJwtPrincipal
 import io.ktor.server.application.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject

@@ -2,7 +2,7 @@ package com.github.bgrebennikov.plugins
 
 import com.auth0.jwt.JWT
 import com.github.bgrebennikov.common.*
-import com.github.bgrebennikov.data.requests.auth.UserJwtPrincipal
+import com.github.bgrebennikov.data.jwt.UserJwtPrincipal
 import com.github.bgrebennikov.services.auth.AuthService
 import io.ktor.http.*
 import io.ktor.server.application.*
