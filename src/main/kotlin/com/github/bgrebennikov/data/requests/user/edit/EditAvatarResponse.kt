@@ -1,6 +1,8 @@
 package com.github.bgrebennikov.data.requests.user.edit
 
-data class EditAvatarResponse(
-    val action: EditAvatarAction,
-    val source: String? = null,
+import com.github.bgrebennikov.data.requests.user.UserActions
+
+data class EditAvatarRequest(
+    val action: UserActions,
+    val photoId: String?
 )
