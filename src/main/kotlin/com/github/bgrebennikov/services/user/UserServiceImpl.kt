@@ -3,8 +3,8 @@ package com.github.bgrebennikov.services.user
 import com.github.bgrebennikov.common.Errors
 import com.github.bgrebennikov.data.base.BaseResponse
 import com.github.bgrebennikov.data.entity.user.UserEntity
-import com.github.bgrebennikov.data.requests.user.edit.EditAvatarAction
-import com.github.bgrebennikov.data.requests.user.edit.EditAvatarResponse
+import com.github.bgrebennikov.data.requests.user.UserActions
+import com.github.bgrebennikov.data.responses.user.edit.EditAvatarResponse
 import com.github.bgrebennikov.data.uploads.PhotosEntity
 import com.github.bgrebennikov.datasource.UploadsDataSource
 import com.github.bgrebennikov.datasource.UserDataSource
@@ -35,7 +35,7 @@ class UserServiceImpl : UserService, KoinComponent {
         if (updateResult){
             return BaseResponse(
                 response = EditAvatarResponse(
-                    EditAvatarAction.UPDATE, source.src
+                    UserActions.UPDATE, source.src
                 )
             )
         }
