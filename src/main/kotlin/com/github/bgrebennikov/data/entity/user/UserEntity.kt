@@ -13,6 +13,12 @@ data class UserEntity(
         val id: String,
         val email: String,
         val firstName: String?,
-        val avatar: String? = null
+        val avatar: List<Avatar> = listOf()
     )
+
+    data class Avatar(
+        val src: String,
+        val thumbnails: Map<String, String>
+    )
+
 }
