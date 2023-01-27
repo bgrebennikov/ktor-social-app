@@ -30,8 +30,8 @@ fun Application.configureSecurity() {
                     }
                 } else null
             }
-            challenge { defaultScheme, realm ->
-                Errors.Auth.TOKEN_EXPIRED
+            challenge { _, _ ->
+                call.respond(HttpStatusCode.Unauthorized, Errors.Auth.TOKEN_EXPIRED)
             }
         }
     }
