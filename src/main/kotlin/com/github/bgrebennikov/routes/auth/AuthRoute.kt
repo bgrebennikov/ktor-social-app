@@ -2,9 +2,13 @@ package com.github.bgrebennikov.routes.auth
 
 import com.github.bgrebennikov.data.requests.auth.LoginRequestDto
 import com.github.bgrebennikov.data.requests.auth.SignupRequestDto
+import com.github.bgrebennikov.plugins.jwtUser
+import com.github.bgrebennikov.plugins.userToken
 import com.github.bgrebennikov.usecases.auth.LoginUseCase
+import com.github.bgrebennikov.usecases.auth.LogoutUseCase
 import com.github.bgrebennikov.usecases.auth.SignupUseCase
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -14,6 +18,11 @@ fun Route.authRoutes() {
     route("/auth") {
         loginRoute()
         signUpRoute()
+    }
+    authenticate {
+        route("/logout"){
+            logoutUser()
+        }
     }
 }
 
@@ -29,6 +38,17 @@ private fun Route.signUpRoute() {
 
         val request = call.receiveNullable<SignupRequestDto>() ?: return@post
         call.respond(SignupUseCase().invoke(request))
+
+    }
+}
+
+private fun Route.logoutUser(){
+    post {
+
+        val userId = call.jwtUser?.userId ?: return@post
+        val token = call.userToken ?: return@post
+
+        call.respond(LogoutUseCase().invoke(userId, token))
 
     }
 }
