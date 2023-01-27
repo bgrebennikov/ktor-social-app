@@ -15,8 +15,14 @@ class JwtServiceImpl : JwtService, KoinComponent {
 
     private val application by inject<Application>()
 
-    private val maxHours = 3_600_000 * 24
-    private val expiresAt = Date(System.currentTimeMillis() + maxHours)
+    private val oneDay = 3_600_000 * 24
+    private val oneMonth = Calendar.getInstance().apply {
+        add(Calendar.MONTH, 1)
+    }.time.time
+
+    private val accessTokenExpiresAt = Date(System.currentTimeMillis() + oneDay)
+    private val refreshTokenExpiresAt = Date(System.currentTimeMillis() + oneMonth)
+
     private val jwtAudience = application.environment.config.property(JWT_AUDIENCE).getString()
     private val issuer = application.environment.config.property(JWT_DOMAIN).getString()
 
