@@ -23,9 +23,13 @@ fun Application.configureSecurity() {
             validate { credential ->
                 if (credential.payload.audience.contains(jwtAudience)) {
                     with(credential.payload) {
+
+                        val userId = getClaim(FIELD_USER_ID) ?: return@validate null
+                        val email = getClaim(FIELD_EMAIL) ?: return@validate null
+
                         UserJwtPrincipal(
-                            userId = getClaim(FIELD_USER_ID).asString(),
-                            email = getClaim(FIELD_EMAIL).asString()
+                            userId = userId.asString(),
+                            email = email.asString()
                         )
                     }
                 } else null
