@@ -1,4 +1,4 @@
-package com.github.bgrebennikov.data.requests.auth
+package com.github.bgrebennikov.data.jwt
 
 import io.ktor.server.auth.*
 
