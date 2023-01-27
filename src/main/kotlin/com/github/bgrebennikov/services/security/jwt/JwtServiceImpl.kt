@@ -37,11 +37,23 @@ class JwtServiceImpl : JwtService, KoinComponent {
             .sign(JWT_ALGORITHM)
     }
 
-    override suspend fun generateToken(request: SignupRequestDto, userId: String): String {
-        return buildJwtToken(UserJwtPrincipal(userId, request.email))
+    private fun buildRefreshJwtToken(expiresAt: Date) : String{
+        return JWT.create()
+            .withAudience(jwtAudience)
+            .withIssuer(issuer)
+            .withExpiresAt(expiresAt)
+            .sign(JWT_ALGORITHM)
     }
 
-    override suspend fun generateToken(request: LoginRequestDto, userId: String): String {
-        return buildJwtToken(UserJwtPrincipal(userId, request.login))
+    override suspend fun generateAccessToken(request: SignupRequestDto, userId: String): String {
+        return buildAccessJwtToken(UserJwtPrincipal(userId, request.email), accessTokenExpiresAt)
+    }
+
+    override suspend fun generateAccessToken(request: LoginRequestDto, userId: String): String {
+        return buildAccessJwtToken(UserJwtPrincipal(userId, request.login), accessTokenExpiresAt)
+    }
+
+    override suspend fun generateRefreshToken(): String {
+        return buildRefreshJwtToken(refreshTokenExpiresAt)
     }
 }
