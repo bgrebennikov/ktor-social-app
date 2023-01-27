@@ -49,6 +49,13 @@ class AuthServiceImpl : AuthService, KoinComponent {
             )
         )
 
+        return BaseResponse(
+            response = AuthResponse(
+                id = generatedId,
+                accessToken = jwtService.generateAccessToken(signupRequest, generatedId),
+                refreshToken = jwtService.generateRefreshToken(),
+            )
+        )
     }
 
     override suspend fun login(loginRequestDto: LoginRequestDto): BaseResponse<UserEntity> {
