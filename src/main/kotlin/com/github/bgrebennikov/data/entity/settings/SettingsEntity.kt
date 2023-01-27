@@ -1,4 +1,4 @@
-package com.github.bgrebennikov.data.auth
+package com.github.bgrebennikov.data.entity.settings
 
 import org.bson.codecs.pojo.annotations.BsonId
 
