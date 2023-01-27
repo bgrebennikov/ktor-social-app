@@ -5,8 +5,8 @@ import com.github.bgrebennikov.data.base.BaseResponse
 import com.github.bgrebennikov.data.base.ErrorType
 import com.github.bgrebennikov.data.base.ResponseError
 import com.github.bgrebennikov.data.entity.user.UserEntity
-import com.github.bgrebennikov.data.requests.user.edit.EditAvatarAction
-import com.github.bgrebennikov.data.requests.user.edit.EditAvatarResponse
+import com.github.bgrebennikov.data.requests.user.UserActions
+import com.github.bgrebennikov.data.responses.user.edit.EditAvatarResponse
 import io.ktor.http.*
 
 object Errors {
@@ -31,6 +31,17 @@ object Errors {
                 )
             )
         )
+
+        val UNRESOLVED_USER_ACTION = BaseResponse<EditAvatarResponse>(
+            status = HttpStatusCode.BadRequest,
+            errors = listOf(
+                ResponseError(
+                    message = "UNRESOLVED_USER_ACTION",
+                    type = ErrorType.UNRESOLVED_ACTION
+                )
+            )
+        )
+
     }
 
     object Uploads {
@@ -66,10 +77,10 @@ object Errors {
         )
     }
 
-    object Server{
+    object Server {
         val INTERNAL_ERROR = BaseResponse(
             response = EditAvatarResponse(
-                EditAvatarAction.UPDATE
+                UserActions.UPDATE
             ),
             errors = listOf(
                 ResponseError(
