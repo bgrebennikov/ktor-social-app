@@ -1,6 +1,7 @@
 package com.github.bgrebennikov.common
 
 import com.auth0.jwt.algorithms.Algorithm
+import java.util.*
 
 const val SERVER_DOMAIN = "server.domain"
 
@@ -17,6 +18,8 @@ const val CLAIM_USER_ID = "userId"
 const val CLAIM_EMAIL = "email"
 
 const val HASHING_SALT_PROPERTY = "hashing.salt"
+const val REDIS_HOST_PROPERTY = "redis.host"
+const val REDIS_PORT_PROPERTY = "redis.port"
 
 val JWT_ALGORITHM: Algorithm = Algorithm.HMAC256(JWT_SECRET)
 
