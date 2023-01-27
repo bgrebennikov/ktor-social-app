@@ -1,6 +1,8 @@
 package com.github.bgrebennikov.services.auth
 
 import com.github.bgrebennikov.common.Errors
+import com.github.bgrebennikov.data.auth.AuthResponse
+import com.github.bgrebennikov.data.auth.SettingsEntity
 import com.github.bgrebennikov.data.base.BaseResponse
 import com.github.bgrebennikov.data.entity.user.UserEntity
 import com.github.bgrebennikov.data.requests.auth.LoginRequestDto
@@ -24,28 +26,26 @@ class AuthServiceImpl : AuthService, KoinComponent {
         return userDataSource.findUserByEmail(email) != null
     }
 
-    override suspend fun signUp(signupRequest: SignupRequestDto): BaseResponse<UserEntity> {
+    override suspend fun signUp(signupRequest: SignupRequestDto): BaseResponse<AuthResponse> {
 
         if (userExists(signupRequest.email)) return Errors.User.USER_ALREADY_EXISTS
-
         val generatedId = ObjectId().toString()
 
-        return BaseResponse(
-            response = userDataSource.insertUser(
-                UserEntity(
+        userDataSource.insertUser(
+            UserEntity(
+                id = generatedId,
+                profile = UserEntity.UserProfile(
                     id = generatedId,
-                    profile = UserEntity.UserProfile(
-                        id = generatedId,
-                        firstName = signupRequest.firstName,
-                        email = signupRequest.email
-                    ),
-                    settings = UserEntity.UserSettings(
-                        token = jwtService.generateToken(signupRequest, generatedId),
-                        passwordHash = hashingService.generateSaltedHash(
-                            signupRequest.password
-                        )
-                    )
-                )
+                    firstName = signupRequest.firstName,
+                    email = signupRequest.email
+                ),
+            )
+        )
+
+        authDataSource.insertSettings(
+            SettingsEntity(
+                id = generatedId,
+                passwordHash = hashingService.generateSaltedHash(signupRequest.password),
             )
         )
 
