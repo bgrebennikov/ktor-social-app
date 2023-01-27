@@ -3,13 +3,18 @@ package com.github.bgrebennikov.plugins
 import com.auth0.jwt.JWT
 import com.github.bgrebennikov.common.*
 import com.github.bgrebennikov.data.requests.auth.UserJwtPrincipal
+import com.github.bgrebennikov.services.auth.AuthService
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
+import org.koin.ktor.ext.inject
 
 fun Application.configureSecurity() {
+
+    val authService by inject<AuthService>()
 
     authentication {
         jwt {
@@ -23,6 +28,9 @@ fun Application.configureSecurity() {
                     .build()
             )
             validate { credential ->
+
+                if (authService.tokenIsDenny(userToken)) return@validate null
+
                 if (credential.payload.audience.contains(jwtAudience)) {
                     with(credential.payload) {
 
