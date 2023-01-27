@@ -58,25 +58,28 @@ class AuthServiceImpl : AuthService, KoinComponent {
         )
     }
 
-    override suspend fun login(loginRequestDto: LoginRequestDto): BaseResponse<UserEntity> {
+    override suspend fun login(loginRequestDto: LoginRequestDto): BaseResponse<AuthResponse> {
 
         val userEntity = userDataSource.findUserByEmail(loginRequestDto.login)
             ?: return Errors.Auth.LOGIN_WRONG_CREDENTIALS
 
+        val userSettings = authDataSource.findUserSettingsById(userEntity.id)
+            ?: return Errors.Auth.LOGIN_WRONG_CREDENTIALS
+
         val isValidCredentials = hashingService.verify(
-            loginRequestDto.password, userEntity.settings.passwordHash
+            loginRequestDto.password, userSettings.passwordHash
         )
 
-        if(!isValidCredentials) return Errors.Auth.LOGIN_WRONG_CREDENTIALS
+        if (!isValidCredentials) return Errors.Auth.LOGIN_WRONG_CREDENTIALS
 
         return BaseResponse(
-            response = userEntity.copy(
-                settings = userEntity.settings.copy(
-                    token = jwtService.generateToken(
-                        loginRequestDto,
-                        userEntity.id
-                    )
-                )
+            response = AuthResponse(
+                userEntity.id,
+                accessToken = jwtService.generateAccessToken(
+                    loginRequestDto,
+                    userEntity.id
+                ),
+                refreshToken = jwtService.generateRefreshToken()
             )
         )
 
