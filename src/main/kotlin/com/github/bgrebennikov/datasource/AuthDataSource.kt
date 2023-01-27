@@ -1,6 +1,6 @@
 package com.github.bgrebennikov.datasource
 
-import com.github.bgrebennikov.data.auth.SettingsEntity
+import com.github.bgrebennikov.data.entity.settings.SettingsEntity
 
 interface AuthDataSource {
     suspend fun insertSettings(settings: SettingsEntity) : SettingsEntity

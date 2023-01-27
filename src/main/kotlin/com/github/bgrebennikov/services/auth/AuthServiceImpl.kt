@@ -3,7 +3,7 @@ package com.github.bgrebennikov.services.auth
 import com.github.bgrebennikov.common.Errors
 import com.github.bgrebennikov.common.ONE_DAY
 import com.github.bgrebennikov.data.auth.AuthResponse
-import com.github.bgrebennikov.data.auth.SettingsEntity
+import com.github.bgrebennikov.data.entity.settings.SettingsEntity
 import com.github.bgrebennikov.data.base.BaseResponse
 import com.github.bgrebennikov.data.entity.user.UserEntity
 import com.github.bgrebennikov.data.requests.auth.LoginRequest

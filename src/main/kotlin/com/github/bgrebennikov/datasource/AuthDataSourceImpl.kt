@@ -1,6 +1,6 @@
 package com.github.bgrebennikov.datasource
 
-import com.github.bgrebennikov.data.auth.SettingsEntity
+import com.github.bgrebennikov.data.entity.settings.SettingsEntity
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.litote.kmongo.coroutine.CoroutineDatabase
