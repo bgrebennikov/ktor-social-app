@@ -5,7 +5,8 @@ import com.github.bgrebennikov.data.requests.auth.SignupRequestDto
 
 interface JwtService {
 
-    suspend fun generateToken(request: SignupRequestDto, userId: String) : String
-    suspend fun generateToken(request: LoginRequestDto, userId: String) : String
+    suspend fun generateAccessToken(request: SignupRequestDto, userId: String) : String
+    suspend fun generateAccessToken(request: LoginRequestDto, userId: String) : String
+    suspend fun generateRefreshToken() : String
 
 }
