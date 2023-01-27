@@ -10,6 +10,14 @@ const val JWT_REALM = "jwt.realm"
 const val JWT_SECRET = "secret"
 const val JWT_DOMAIN = "jwt.domain"
 
+val ONE_DAY = 3_600_000 * 24
+val ONE_MONTH = Calendar.getInstance().apply {
+    add(Calendar.MONTH, 1)
+}.time.time
+
+val ACCESS_TOKEN_EXPIRE_DATE = Date(System.currentTimeMillis() + ONE_DAY)
+val REFRESH_TOKEN_EXPIRE_DATE = Date(System.currentTimeMillis() + ONE_MONTH)
+
 const val FIELD_USER_ID = "userId"
 const val FIELD_EMAIL = "email"
 
