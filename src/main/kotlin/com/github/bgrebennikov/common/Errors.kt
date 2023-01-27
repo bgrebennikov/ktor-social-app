@@ -10,7 +10,7 @@ import io.ktor.http.*
 
 object Errors {
     object User {
-        val USER_ALREADY_EXISTS = BaseResponse<UserEntity>(
+        val USER_ALREADY_EXISTS = BaseResponse<AuthResponse>(
             status = HttpStatusCode.BadRequest,
             errors = listOf(
                 ResponseError(
