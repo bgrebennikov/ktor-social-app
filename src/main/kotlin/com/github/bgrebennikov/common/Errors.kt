@@ -46,7 +46,7 @@ object Errors {
     }
 
     object Auth {
-        val LOGIN_WRONG_CREDENTIALS = BaseResponse<UserEntity>(
+        val LOGIN_WRONG_CREDENTIALS = BaseResponse<AuthResponse>(
             status = HttpStatusCode.BadRequest,
             errors = listOf(
                 ResponseError(
