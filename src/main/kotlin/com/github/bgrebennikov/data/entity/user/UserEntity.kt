@@ -6,13 +6,7 @@ data class UserEntity(
     @BsonId
     val id: String,
     val profile: UserProfile,
-    val settings: UserSettings
 ) {
-
-    data class UserSettings(
-        val token: String,
-        val passwordHash: String,
-    )
 
     data class UserProfile(
         @BsonId
