@@ -3,9 +3,11 @@ package com.github.bgrebennikov.plugins
 import com.auth0.jwt.JWT
 import com.github.bgrebennikov.common.*
 import com.github.bgrebennikov.data.requests.auth.UserJwtPrincipal
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
+import io.ktor.server.response.*
 
 fun Application.configureSecurity() {
 
