@@ -27,7 +27,7 @@ class JwtServiceImpl : JwtService, KoinComponent {
     private val issuer = application.environment.config.property(JWT_DOMAIN).getString()
 
 
-    private suspend fun buildJwtToken(claim: UserJwtPrincipal) : String{
+    private fun buildAccessJwtToken(claim: UserJwtPrincipal, expiresAt: Date) : String{
         return JWT.create()
             .withAudience(jwtAudience)
             .withIssuer(issuer)
