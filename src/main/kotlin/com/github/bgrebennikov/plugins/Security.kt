@@ -46,3 +46,4 @@ fun Application.configureSecurity() {
 
 
 val ApplicationCall.jwtUser get() = principal<UserJwtPrincipal>()
+val ApplicationCall.userToken get() = request.authorization()?.split(" ")?.last()
