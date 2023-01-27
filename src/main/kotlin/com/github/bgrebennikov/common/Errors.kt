@@ -7,12 +7,10 @@ import com.github.bgrebennikov.data.base.ResponseError
 import com.github.bgrebennikov.data.entity.user.UserEntity
 import com.github.bgrebennikov.data.requests.user.UserActions
 import com.github.bgrebennikov.data.responses.user.edit.EditAvatarResponse
-import io.ktor.http.*
 
 object Errors {
     object User {
         val USER_ALREADY_EXISTS = BaseResponse<AuthResponse>(
-            status = HttpStatusCode.BadRequest,
             errors = listOf(
                 ResponseError(
                     message = "User already exists",
@@ -23,7 +21,6 @@ object Errors {
         )
 
         val USER_NOT_FOUND = BaseResponse<UserEntity>(
-            status = HttpStatusCode.BadRequest,
             errors = listOf(
                 ResponseError(
                     message = "USER_NOT_FOUND",
@@ -33,7 +30,6 @@ object Errors {
         )
 
         val UNRESOLVED_USER_ACTION = BaseResponse<EditAvatarResponse>(
-            status = HttpStatusCode.BadRequest,
             errors = listOf(
                 ResponseError(
                     message = "UNRESOLVED_USER_ACTION",
@@ -58,7 +54,6 @@ object Errors {
 
     object Auth {
         val LOGIN_WRONG_CREDENTIALS = BaseResponse<AuthResponse>(
-            status = HttpStatusCode.BadRequest,
             errors = listOf(
                 ResponseError(
                     message = "Wrong credentials. Check your login or password",
