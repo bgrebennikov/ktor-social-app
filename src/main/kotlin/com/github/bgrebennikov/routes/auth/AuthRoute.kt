@@ -1,7 +1,7 @@
 package com.github.bgrebennikov.routes.auth
 
-import com.github.bgrebennikov.data.requests.auth.LoginRequestDto
-import com.github.bgrebennikov.data.requests.auth.SignupRequestDto
+import com.github.bgrebennikov.data.requests.auth.LoginRequest
+import com.github.bgrebennikov.data.requests.auth.SignupRequest
 import com.github.bgrebennikov.plugins.jwtUser
 import com.github.bgrebennikov.plugins.userToken
 import com.github.bgrebennikov.usecases.auth.LoginUseCase
@@ -28,7 +28,7 @@ fun Route.authRoutes() {
 
 private fun Route.loginRoute() {
     post("/login") {
-        val request = call.receiveNullable<LoginRequestDto>() ?: return@post
+        val request = call.receiveNullable<LoginRequest>() ?: return@post
         call.respond(LoginUseCase().invoke(request))
     }
 }
@@ -36,7 +36,7 @@ private fun Route.loginRoute() {
 private fun Route.signUpRoute() {
     post("/signup") {
 
-        val request = call.receiveNullable<SignupRequestDto>() ?: return@post
+        val request = call.receiveNullable<SignupRequest>() ?: return@post
         call.respond(SignupUseCase().invoke(request))
 
     }

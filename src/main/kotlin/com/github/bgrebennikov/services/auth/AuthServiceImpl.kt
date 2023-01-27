@@ -6,8 +6,8 @@ import com.github.bgrebennikov.data.auth.AuthResponse
 import com.github.bgrebennikov.data.auth.SettingsEntity
 import com.github.bgrebennikov.data.base.BaseResponse
 import com.github.bgrebennikov.data.entity.user.UserEntity
-import com.github.bgrebennikov.data.requests.auth.LoginRequestDto
-import com.github.bgrebennikov.data.requests.auth.SignupRequestDto
+import com.github.bgrebennikov.data.requests.auth.LoginRequest
+import com.github.bgrebennikov.data.requests.auth.SignupRequest
 import com.github.bgrebennikov.data.requests.user.UserActions
 import com.github.bgrebennikov.data.responses.auth.LogoutResponse
 import com.github.bgrebennikov.datasource.AuthDataSource
@@ -33,7 +33,7 @@ class AuthServiceImpl : AuthService, KoinComponent {
         return userDataSource.findUserByEmail(email) != null
     }
 
-    override suspend fun signUp(signupRequest: SignupRequestDto): BaseResponse<AuthResponse> {
+    override suspend fun signUp(signupRequest: SignupRequest): BaseResponse<AuthResponse> {
 
         if (userExists(signupRequest.email)) return Errors.User.USER_ALREADY_EXISTS
         val generatedId = ObjectId().toString()
@@ -65,16 +65,16 @@ class AuthServiceImpl : AuthService, KoinComponent {
         )
     }
 
-    override suspend fun login(loginRequestDto: LoginRequestDto): BaseResponse<AuthResponse> {
+    override suspend fun login(loginRequest: LoginRequest): BaseResponse<AuthResponse> {
 
-        val userEntity = userDataSource.findUserByEmail(loginRequestDto.login)
+        val userEntity = userDataSource.findUserByEmail(loginRequest.login)
             ?: return Errors.Auth.LOGIN_WRONG_CREDENTIALS
 
         val userSettings = authDataSource.findUserSettingsById(userEntity.id)
             ?: return Errors.Auth.LOGIN_WRONG_CREDENTIALS
 
         val isValidCredentials = hashingService.verify(
-            loginRequestDto.password, userSettings.passwordHash
+            loginRequest.password, userSettings.passwordHash
         )
 
         if (!isValidCredentials) return Errors.Auth.LOGIN_WRONG_CREDENTIALS
@@ -83,7 +83,7 @@ class AuthServiceImpl : AuthService, KoinComponent {
             response = AuthResponse(
                 userEntity.id,
                 accessToken = jwtService.generateAccessToken(
-                    loginRequestDto,
+                    loginRequest,
                     userEntity.id
                 ),
                 refreshToken = jwtService.generateRefreshToken()
