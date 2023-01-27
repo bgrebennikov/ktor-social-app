@@ -1,5 +1,7 @@
 package com.github.bgrebennikov.DI.modules
 
+import com.github.bgrebennikov.datasource.AuthDataSource
+import com.github.bgrebennikov.datasource.AuthDataSourceImpl
 import com.github.bgrebennikov.services.auth.AuthService
 import com.github.bgrebennikov.services.auth.AuthServiceImpl
 import com.github.bgrebennikov.services.security.hashing.HashingService
@@ -19,5 +21,8 @@ val authServiceModule = module {
     }
     single<HashingService>{
         HashingServiceImpl()
+    }
+    single<AuthDataSource>{
+        AuthDataSourceImpl()
     }
 }
