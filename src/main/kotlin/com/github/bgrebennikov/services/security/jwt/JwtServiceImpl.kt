@@ -2,8 +2,6 @@ package com.github.bgrebennikov.services.security.jwt
 
 import com.auth0.jwt.JWT
 import com.github.bgrebennikov.common.*
-import com.github.bgrebennikov.data.requests.auth.LoginRequest
-import com.github.bgrebennikov.data.requests.auth.SignupRequest
 import com.github.bgrebennikov.data.jwt.UserJwtPrincipal
 import io.ktor.server.application.*
 import org.koin.core.component.KoinComponent
@@ -34,13 +32,10 @@ class JwtServiceImpl : JwtService, KoinComponent {
             .sign(JWT_ALGORITHM)
     }
 
-    override suspend fun generateAccessToken(request: SignupRequest, userId: String): String {
-        return buildAccessJwtToken(UserJwtPrincipal(userId, request.email), ACCESS_TOKEN_EXPIRE_DATE)
+    override suspend fun generateAccessToken(email: String, userId: String): String {
+        return buildAccessJwtToken(UserJwtPrincipal(userId, email), ACCESS_TOKEN_EXPIRE_DATE)
     }
 
-    override suspend fun generateAccessToken(request: LoginRequest, userId: String): String {
-        return buildAccessJwtToken(UserJwtPrincipal(userId, request.login), ACCESS_TOKEN_EXPIRE_DATE)
-    }
 
     override suspend fun generateRefreshToken(): String {
         return buildRefreshJwtToken(REFRESH_TOKEN_EXPIRE_DATE)
