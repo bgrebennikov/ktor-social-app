@@ -59,7 +59,7 @@ class AuthServiceImpl : AuthService, KoinComponent {
         return BaseResponse(
             response = AuthResponse(
                 id = generatedId,
-                accessToken = jwtService.generateAccessToken(signupRequest, generatedId),
+                accessToken = jwtService.generateAccessToken(signupRequest.email, generatedId),
                 refreshToken = jwtService.generateRefreshToken(),
             )
         )
@@ -67,7 +67,7 @@ class AuthServiceImpl : AuthService, KoinComponent {
 
     override suspend fun login(loginRequest: LoginRequest): BaseResponse<AuthResponse> {
 
-        val userEntity = userDataSource.findUserByEmail(loginRequest.login)
+        val userEntity = userDataSource.findUserByEmail(loginRequest.email)
             ?: return Errors.Auth.LOGIN_WRONG_CREDENTIALS
 
         val userSettings = authDataSource.findUserSettingsById(userEntity.id)
@@ -83,7 +83,7 @@ class AuthServiceImpl : AuthService, KoinComponent {
             response = AuthResponse(
                 userEntity.id,
                 accessToken = jwtService.generateAccessToken(
-                    loginRequest,
+                    loginRequest.email,
                     userEntity.id
                 ),
                 refreshToken = jwtService.generateRefreshToken()
