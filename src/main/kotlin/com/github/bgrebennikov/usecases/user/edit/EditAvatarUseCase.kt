@@ -2,8 +2,6 @@ package com.github.bgrebennikov.usecases.user.edit
 
 import com.github.bgrebennikov.common.Errors
 import com.github.bgrebennikov.data.base.BaseResponse
-import com.github.bgrebennikov.data.base.ErrorType
-import com.github.bgrebennikov.data.base.ResponseError
 import com.github.bgrebennikov.data.requests.user.UserActions
 import com.github.bgrebennikov.data.requests.user.edit.EditAvatarRequest
 import com.github.bgrebennikov.data.responses.user.edit.EditAvatarResponse
@@ -16,12 +14,7 @@ class EditAvatarUseCase : KoinComponent {
     private val userService by inject<UserService>()
 
     suspend operator fun invoke(request: EditAvatarRequest, userId: String?): BaseResponse<EditAvatarResponse> {
-        userId ?: return BaseResponse(
-            response = EditAvatarResponse(UserActions.UPDATE),
-            errors = listOf(
-                ResponseError("Something went wrong...", type = ErrorType.INTERNAL_SERVER_ERROR)
-            )
-        )
+        userId ?: return Errors.User.Avatar.INVALID_USER_ID
         return when (request.action) {
             UserActions.UPDATE -> userService.updateAvatar(userId, request.photoId)
             UserActions.REMOVE -> BaseResponse(
