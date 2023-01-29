@@ -44,6 +44,7 @@ class AuthServiceImpl : AuthService, KoinComponent {
                 profile = UserEntity.UserProfile(
                     id = generatedId,
                     firstName = signupRequest.firstName,
+                    lastName= signupRequest.lastName,
                     email = signupRequest.email
                 ),
             )
@@ -73,11 +74,11 @@ class AuthServiceImpl : AuthService, KoinComponent {
         val userSettings = authDataSource.findUserSettingsById(userEntity.id)
             ?: return Errors.Auth.LOGIN_WRONG_CREDENTIALS
 
-        val isValidCredentials = hashingService.verify(
+        val isPasswordValid = hashingService.verify(
             loginRequest.password, userSettings.passwordHash
         )
 
-        if (!isValidCredentials) return Errors.Auth.LOGIN_WRONG_CREDENTIALS
+        if (!isPasswordValid) return Errors.Auth.LOGIN_WRONG_CREDENTIALS
 
         return BaseResponse(
             response = AuthResponse(
@@ -93,11 +94,10 @@ class AuthServiceImpl : AuthService, KoinComponent {
     }
 
     override suspend fun logout(userId: String, token: String): BaseResponse<LogoutResponse> {
-        val deny = redisDataSource.set(token, userId, TimeUnit.MILLISECONDS.toSeconds(ONE_DAY.toLong()))
+        redisDataSource.set(token, userId, TimeUnit.MILLISECONDS.toSeconds(ONE_DAY.toLong()))
         return BaseResponse(
             response = LogoutResponse(
                 UserActions.LOGOUT,
-                status = deny
             )
         )
     }
