@@ -38,6 +38,15 @@ object Errors {
             )
         )
 
+        object Avatar{
+            val INVALID_USER_ID = BaseResponse(
+                response = EditAvatarResponse(UserActions.UPDATE),
+                errors = listOf(
+                    ResponseError("Invalid user Id", type = ErrorType.INTERNAL_SERVER_ERROR)
+                )
+            )
+        }
+
     }
 
     object Uploads {
