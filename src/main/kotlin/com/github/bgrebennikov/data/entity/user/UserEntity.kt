@@ -12,8 +12,24 @@ data class UserEntity(
         @BsonId
         val id: String,
         val email: String,
-        val firstName: String?,
-        val avatar: List<Avatar> = listOf()
+        val firstName: String,
+        val lastName: String,
+        val avatar: List<Avatar> = listOf(),
+        val statusText: String? = null,
+        val info: BasicInfo? = null,
+        val hobbies: List<Hobbies> = listOf(),
+        val about: String? = null
+    )
+
+    data class BasicInfo(
+        val country: String,
+        val city: String,
+        val age: Int
+    )
+
+    data class Hobbies(
+        val title: String,
+        val emojiIconSource: String
     )
 
     data class Avatar(
