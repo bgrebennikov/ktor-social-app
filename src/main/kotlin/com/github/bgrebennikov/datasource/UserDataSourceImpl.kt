@@ -14,9 +14,10 @@ class UserDataSourceImpl : UserDataSource, KoinComponent {
     private val database by inject<CoroutineDatabase>()
 
     private val users = database.getCollection<UserEntity>()
+
     override suspend fun findUserByEmail(email: String): UserEntity? {
         return users.findOne(
-            UserEntity.UserProfile::email eq email
+            UserEntity::profile / UserEntity.UserProfile::email eq email
         )
     }
 
