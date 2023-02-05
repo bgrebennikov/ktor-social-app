@@ -1,6 +1,6 @@
 package com.github.bgrebennikov.usecases.auth
 
-import com.github.bgrebennikov.data.auth.AuthResponse
+import com.github.bgrebennikov.data.responses.auth.AuthResponse
 import com.github.bgrebennikov.data.base.BaseResponse
 import com.github.bgrebennikov.data.requests.auth.SignupRequest
 import com.github.bgrebennikov.services.auth.AuthService
