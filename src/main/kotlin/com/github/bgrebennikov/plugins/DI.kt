@@ -14,12 +14,13 @@ fun Application.configureDI(){
             authServiceModule,
             uploadModule,
             redisModule,
+            searchModule,
 
             module {
                 single {
                     this@configureDI
                 }
-            }
+            },
         )
     }
 }
