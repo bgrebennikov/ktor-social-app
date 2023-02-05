@@ -13,6 +13,6 @@ interface AuthService {
     suspend fun refresh(refreshToken: String): BaseResponse<AuthResponse>
     suspend fun logout(userId: String, token: String) : BaseResponse<LogoutResponse>
 
-    suspend fun tokenIsDenny(token: String?) : Boolean
+    fun tokenInBlacklist(token: String?) : Boolean
 
 }
