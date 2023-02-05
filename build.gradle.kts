@@ -1,6 +1,10 @@
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
+val koin_version: String by project
+val kmongo_version: String by project
+val scalr_version: String by project
+val jedis_version: String by project
 
 plugins {
     kotlin("jvm") version "1.8.0"
@@ -33,6 +37,23 @@ dependencies {
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("io.ktor:ktor-server-config-yaml:$ktor_version")
+
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+
+    // koin core
+    implementation("io.insert-koin:koin-core:$koin_version")
+    implementation("io.insert-koin:koin-ktor:$koin_version")
+    implementation("io.insert-koin:koin-logger-slf4j:$koin_version")
+
+    // kmongo
+    implementation("org.litote.kmongo:kmongo:$kmongo_version")
+    implementation("org.litote.kmongo:kmongo-coroutine:$kmongo_version")
+
+    implementation("commons-codec:commons-codec:1.13")
+    implementation("org.imgscalr:imgscalr-lib:$scalr_version")
+
+    // Jedis
+    implementation("redis.clients:jedis:$jedis_version")
+
 }

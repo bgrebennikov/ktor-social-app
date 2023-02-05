@@ -8,3 +8,11 @@ jwt:
   domain: "https://jwt-provider-domain/"
   audience: "jwt-audience"
   realm: "ktor sample app"
+  issuer: "https://jwt-provider-domain/"
+hashing:
+  salt: "ihc999w90900900af"
+server:
+  domain: "http://127.0.0.1:8080"
+redis:
+  host: "127.0.0.1"
+  port: 6379
