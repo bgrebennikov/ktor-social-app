@@ -1,11 +1,13 @@
 package com.github.bgrebennikov.common
 
-import com.github.bgrebennikov.data.auth.AuthResponse
 import com.github.bgrebennikov.data.base.BaseResponse
 import com.github.bgrebennikov.data.base.ErrorType
 import com.github.bgrebennikov.data.base.ResponseError
+import com.github.bgrebennikov.data.entity.prompts.HobbiesSearchEntity
+import com.github.bgrebennikov.data.entity.prompts.PlacesSearchEntity
 import com.github.bgrebennikov.data.entity.user.UserEntity
 import com.github.bgrebennikov.data.requests.user.UserActions
+import com.github.bgrebennikov.data.responses.auth.AuthResponse
 import com.github.bgrebennikov.data.responses.user.edit.EditAvatarResponse
 
 object Errors {
@@ -76,6 +78,58 @@ object Errors {
                 ResponseError(
                     message = "Token is not valid or has been expired",
                     type = ErrorType.TOKEN_EXPIRED
+                )
+            )
+        )
+        val REFRESH_TOKEN_EXPIRED = BaseResponse<AuthResponse>(
+            response = null,
+            errors = listOf(
+                ResponseError(
+                    message = "This refresh token was expired",
+                    type = ErrorType.TOKEN_EXPIRED
+                )
+            )
+        )
+        val INVALID_SESSION = BaseResponse<AuthResponse>(
+            errors = listOf(
+                ResponseError(
+                    message = "Invalid session. Try login again",
+                    type = ErrorType.INVALID_SESSION
+                )
+            )
+        )
+        val INVALID_REFRESH_TOKEN = BaseResponse<AuthResponse>(
+            errors = listOf(
+                ResponseError(
+                    message = "Invalid refresh token",
+                    type = ErrorType.INVALID_REFRESH_TOKEN
+                )
+            )
+        )
+        val REFRESH_TOKEN_VALIDATION_ERROR = BaseResponse<AuthResponse>(
+            errors = listOf(
+                ResponseError(
+                    message = "Error validate refresh token",
+                    type = ErrorType.INVALID_REFRESH_TOKEN
+                )
+            )
+        )
+    }
+
+    object Search{
+        val EMPTY_SEARCH_QUERY = BaseResponse<List<HobbiesSearchEntity>>(
+            errors = listOf(
+                ResponseError(
+                    message = "search query must be not empty",
+                    type = ErrorType.EMPTY_SEARCH_QUERY
+                )
+            )
+        )
+        val EMPTY_PLACES_SEARCH_QUERY = BaseResponse<List<PlacesSearchEntity>>(
+            errors = listOf(
+                ResponseError(
+                    message = "search query must be not empty",
+                    type = ErrorType.EMPTY_SEARCH_QUERY
                 )
             )
         )
