@@ -123,7 +123,7 @@ class AuthServiceImpl : AuthService, KoinComponent {
         )
     }
 
-    override suspend fun tokenIsDenny(token: String?): Boolean {
+    override fun tokenInBlacklist(token: String?) : Boolean {
         token ?: return false
         return redisDataSource.get(token) != null
     }
