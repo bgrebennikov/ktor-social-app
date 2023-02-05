@@ -21,9 +21,14 @@ fun Route.authRoutes() {
     route("/auth") {
         loginRoute()
         signUpRoute()
+
+        route("/refresh") {
+            refresh()
+        }
+
     }
-    authenticate {
-        route("/logout"){
+    authenticate(ACCESS_TOKEN) {
+        route("/logout") {
             logoutUser()
         }
     }
