@@ -4,7 +4,9 @@ import com.github.bgrebennikov.common.Errors
 import com.github.bgrebennikov.data.base.BaseResponse
 import com.github.bgrebennikov.data.entity.user.UserEntity
 import com.github.bgrebennikov.data.requests.user.UserActions
+import com.github.bgrebennikov.data.responses.user.edit.EditAboutResponse
 import com.github.bgrebennikov.data.responses.user.edit.EditAvatarResponse
+import com.github.bgrebennikov.data.responses.user.edit.EditHobbiesResponse
 import com.github.bgrebennikov.data.uploads.PhotosEntity
 import com.github.bgrebennikov.datasource.UploadsDataSource
 import com.github.bgrebennikov.datasource.UserDataSource
@@ -32,7 +34,7 @@ class UserServiceImpl : UserService, KoinComponent {
 
         val updateResult = userDataSource.updateUserAvatar(userId, source)
 
-        if (updateResult){
+        if (updateResult) {
             return BaseResponse(
                 response = EditAvatarResponse(
                     UserActions.UPDATE, source.src
@@ -41,6 +43,32 @@ class UserServiceImpl : UserService, KoinComponent {
         }
 
         return Errors.Server.INTERNAL_ERROR
+    }
+
+    override suspend fun updateAbout(userId: String, about: UserEntity.About): BaseResponse<EditAboutResponse> {
+        val updateResult = userDataSource.updateAbout(userId, about)
+        return BaseResponse(
+            response = EditAboutResponse(
+                UserActions.UPDATE,
+                updateResult.wasAcknowledged(),
+            )
+        )
+    }
+
+    override suspend fun updateHobbies(
+        userId: String,
+        hobbies: List<UserEntity.Hobbies>
+    ): BaseResponse<EditHobbiesResponse> {
+
+        userDataSource.updateUserHobby(userId, hobbies)
+
+        return BaseResponse(
+            response = EditHobbiesResponse(
+                UserActions.UPDATE,
+                userDataSource.getUserHobbies(userId)
+            )
+        )
+
     }
 
 
