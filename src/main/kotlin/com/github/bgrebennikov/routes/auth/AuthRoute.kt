@@ -1,11 +1,14 @@
 package com.github.bgrebennikov.routes.auth
 
+import com.github.bgrebennikov.common.ACCESS_TOKEN
 import com.github.bgrebennikov.data.requests.auth.LoginRequest
+import com.github.bgrebennikov.data.requests.auth.RefreshTokenRequest
 import com.github.bgrebennikov.data.requests.auth.SignupRequest
 import com.github.bgrebennikov.plugins.jwtUser
 import com.github.bgrebennikov.plugins.userToken
 import com.github.bgrebennikov.usecases.auth.LoginUseCase
 import com.github.bgrebennikov.usecases.auth.LogoutUseCase
+import com.github.bgrebennikov.usecases.auth.RefreshTokensUseCase
 import com.github.bgrebennikov.usecases.auth.SignupUseCase
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -42,7 +45,19 @@ private fun Route.signUpRoute() {
     }
 }
 
-private fun Route.logoutUser(){
+private fun Route.refresh() {
+    post {
+        val refreshToken = call.receiveNullable<RefreshTokenRequest>()
+
+        call.respond(
+            RefreshTokensUseCase().invoke(
+                refreshToken?.refreshToken
+            )
+        )
+    }
+}
+
+private fun Route.logoutUser() {
     post {
 
         val userId = call.jwtUser?.userId ?: return@post
