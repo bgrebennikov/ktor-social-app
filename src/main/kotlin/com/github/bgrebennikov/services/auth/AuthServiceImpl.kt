@@ -1,14 +1,13 @@
 package com.github.bgrebennikov.services.auth
 
-import com.github.bgrebennikov.common.Errors
-import com.github.bgrebennikov.common.ONE_DAY
-import com.github.bgrebennikov.data.auth.AuthResponse
-import com.github.bgrebennikov.data.entity.settings.SettingsEntity
+import com.github.bgrebennikov.common.*
 import com.github.bgrebennikov.data.base.BaseResponse
+import com.github.bgrebennikov.data.entity.settings.SettingsEntity
 import com.github.bgrebennikov.data.entity.user.UserEntity
 import com.github.bgrebennikov.data.requests.auth.LoginRequest
 import com.github.bgrebennikov.data.requests.auth.SignupRequest
 import com.github.bgrebennikov.data.requests.user.UserActions
+import com.github.bgrebennikov.data.responses.auth.AuthResponse
 import com.github.bgrebennikov.data.responses.auth.LogoutResponse
 import com.github.bgrebennikov.datasource.AuthDataSource
 import com.github.bgrebennikov.datasource.RedisDataSource
@@ -61,7 +60,7 @@ class AuthServiceImpl : AuthService, KoinComponent {
             response = AuthResponse(
                 id = generatedId,
                 accessToken = jwtService.generateAccessToken(signupRequest.email, generatedId),
-                refreshToken = jwtService.generateRefreshToken(),
+                refreshToken = jwtService.generateRefreshToken(signupRequest.email, generatedId),
             )
         )
     }
@@ -87,12 +86,34 @@ class AuthServiceImpl : AuthService, KoinComponent {
                     loginRequest.email,
                     userEntity.id
                 ),
-                refreshToken = jwtService.generateRefreshToken()
+                refreshToken = jwtService.generateRefreshToken(loginRequest.email, userEntity.id)
             )
         )
 
     }
 
+    override suspend fun refresh(refreshToken: String): BaseResponse<AuthResponse> {
+
+        if(tokenInBlacklist(refreshToken)) return Errors.Auth.REFRESH_TOKEN_EXPIRED
+
+        val decodedToken = jwtService.decodeRefreshToken(refreshToken) ?: return Errors.Auth.REFRESH_TOKEN_VALIDATION_ERROR
+
+        val userId = decodedToken.getClaim(CLAIM_USER_ID).asString()
+        val email = decodedToken.getClaim(CLAIM_EMAIL).asString()
+
+
+        redisDataSource.set(refreshToken, userId, TimeUnit.MILLISECONDS.toSeconds(ONE_MONTH))
+        return BaseResponse(
+            response = AuthResponse(
+                userId,
+                accessToken = jwtService.generateAccessToken(
+                    email,
+                    userId
+                ),
+                refreshToken = jwtService.generateRefreshToken(email, userId)
+            )
+        )
+    }
     override suspend fun logout(userId: String, token: String): BaseResponse<LogoutResponse> {
         redisDataSource.set(token, userId, TimeUnit.MILLISECONDS.toSeconds(ONE_DAY.toLong()))
         return BaseResponse(
