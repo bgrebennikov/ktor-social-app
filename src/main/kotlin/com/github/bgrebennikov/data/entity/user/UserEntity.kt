@@ -16,25 +16,31 @@ data class UserEntity(
         val lastName: String,
         val avatar: List<Avatar> = listOf(),
         val statusText: String? = null,
-        val info: BasicInfo? = null,
         val hobbies: List<Hobbies> = listOf(),
-        val about: String? = null
+        val about: About = About()
     )
 
-    data class BasicInfo(
-        val country: String,
-        val city: String,
-        val age: Int
-    )
+    data class About(
+        val place: Place? = null,
+        val age: Int? = null,
+        val myself: String? = null
+    ){
+        data class Place(
+            @BsonId
+            val id : String,
+            val city_title: String,
+            val country_title: String
+        )
+    }
 
     data class Hobbies(
+        val id: String,
         val title: String,
-        val emojiIconSource: String
+        val emojiUnicode: String
     )
 
     data class Avatar(
         val src: String,
         val thumbnails: Map<String, String>
     )
-
 }
